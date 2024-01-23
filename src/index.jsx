@@ -4,6 +4,7 @@ import { Canvas } from '@react-three/fiber'
 import Experience from './Experience.jsx'
 import { KeyboardControls } from '@react-three/drei'
 import Interface from './Interface.jsx'
+import { SocketManager } from './SocketManager.jsx'
 
 const root = ReactDOM.createRoot(document.querySelector('#root'))
 
@@ -15,6 +16,7 @@ root.render(
         { name: 'rightward', keys: ['ArrowRight', 'KeyD']},
         { name: 'jump', keys: ['Space']}
     ]}>
+        <SocketManager/>
         <Canvas
             shadows
             camera={ {
