@@ -7,7 +7,7 @@ import useGame from "./stores/useGame";
 import { socket } from "./SocketManager.jsx";
 
 export default function Player(props) {
-  const body = useRef();
+  const body = useRef(null);
   const [subscribeKeys, getKeys] = useKeyboardControls();
   const { rapier, world } = useRapier();
 
@@ -44,6 +44,8 @@ export default function Player(props) {
     }
   };
 
+  
+
   useEffect(() => {
     const unsubscribeReset = useGame.subscribe(
       (state) => state.phase,
@@ -70,6 +72,16 @@ export default function Player(props) {
       unsubscribeAny();
     };
   }, []);
+
+
+  const handlePositionChange = ()=>{
+    const bodyPosition = body.current.translation()
+    socket.emit("move",{
+      id: props.id,
+      position: bodyPosition
+    })
+  }
+
 
   useFrame((state, delta) => {
     if (socket.id === props.id) {
@@ -116,13 +128,14 @@ export default function Player(props) {
 
       body.current.applyImpulse(impulse);
       body.current.applyTorqueImpulse(torque);
-
       /**
        * Phases
        */
       if (bodyPosition.z < -(blocksCount * 4 + 2)) end();
 
       if (bodyPosition.y < -4) restart();
+
+      handlePositionChange()
     }
   });
 

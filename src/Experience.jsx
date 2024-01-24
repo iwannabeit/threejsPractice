@@ -22,7 +22,7 @@ export default function Experience()
         <OrbitControls makeDefault />
         <Physics debug ={false}>{
             players.map((player) => (
-                <Player id={player.id} position={player.position}/>
+                <Player key={player.id} id={player.id} position={player.position}/>
             ))
         }
             <Lights />

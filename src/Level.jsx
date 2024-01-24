@@ -167,7 +167,6 @@ export function Level({count = 5, types=[BlockSpinner, BlockAxe, BlockLimbo], se
   console.log(blocks)
     return <>
         <BlockStart position={[0,0,0]}/>
-        {blocks.map((Block, index)=> <Block key={index} position={[0,0, -(index+1)*4]}/>)}
         <BlockEnd position={[0, 0, -(count+1) * 4]}/>
         <Bounds length={count + 2}/>
     </>

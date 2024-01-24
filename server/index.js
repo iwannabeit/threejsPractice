@@ -15,17 +15,20 @@ io.on("connection", (socket)=>{
 
   Players.push({
     id: socket.id,
-    position: {x: Math.random()*200 - 100, y: 1, z:Math.random()*200 - 100}
+    position: {x:0, y:0.2, z:0}
   })
 
   socket.emit("hello")
 
   io.emit("Players", Players)
 
-  socket.on("move", (position)=>{
-    const player = Players.find((player)=> player.id === socket.id)
-    player.position = position
-    io.emit("Players", Players)
+  socket.on("move", ({id, position})=>{
+    const player = Players.find((player)=> player.id === id)
+    
+    if(player && position){
+      player.position = position
+      io.emit("updatePlayer", {id, position})
+    }
   })
 
   socket.on("disconnect", ()=>{
