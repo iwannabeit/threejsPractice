@@ -22,6 +22,12 @@ io.on("connection", (socket)=>{
 
   io.emit("Players", Players)
 
+  socket.on("move", (position)=>{
+    const player = Players.find((player)=> player.id === socket.id)
+    player.position = position
+    io.emit("Players", Players)
+  })
+
   socket.on("disconnect", ()=>{
     console.log('user disconnected')
 
