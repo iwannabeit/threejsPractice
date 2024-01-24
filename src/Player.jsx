@@ -43,16 +43,21 @@ export default function Player(props) {
       if (hit.toi < 0.15) body.current.applyImpulse({ x: 0, y: 0.5, z: 0 });
     }
   };
-
   
-
+  useEffect(()=>{
+    if(body.current){
+      body.current.setTranslation(props.position)
+    }
+  },[props.position])
+  
   useEffect(() => {
     const unsubscribeReset = useGame.subscribe(
       (state) => state.phase,
       (value) => {
         if (value === "ready") reset();
       }
-    );
+  );
+
 
     const unsubscribeJump = subscribeKeys(
       (state) => state.jump,
@@ -148,7 +153,6 @@ export default function Player(props) {
       friction={1}
       linearDamping={0.5}
       angularDamping={0.5}
-      position={[Math.random(), 1, Math.random()]}
     >
       <mesh castShadow>
         <icosahedronGeometry args={[0.3, 1]} />
